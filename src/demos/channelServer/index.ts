@@ -4,7 +4,7 @@
  * @TodoList: 无
  * @Date: 2020-06-04 16:24:57
  * @Last Modified by: xiaotian@tangping
- * @Last Modified time: 2020-06-04 17:09:06
+ * @Last Modified time: 2020-06-04 17:48:45
  */
 
 import events = require('events');
@@ -44,10 +44,35 @@ channel.on('join', (id: string, client: net.Socket) => {
   channel.on('broadcast', subscriptions[id]);
 });
 
+// 用户离开聊天室
+channel.on('leave', (id: string) => {
+  // 清除订阅事件
+  channel.removeListener('broadcast', subscriptions[id]);
+
+  // 清除用户数据
+  delete clients[id];
+  delete subscriptions[id];
+
+  const currentPeopleLength = Object.keys(clients).length;
+
+  // 广播退出信息
+  channel.emit(
+    'broadcast',
+    id,
+    `${id} has left the channelRoom! There are ${currentPeopleLength} people in the channelRoom.`
+  );
+  console.log(
+    `${id} has left the channelRoom! There are ${currentPeopleLength} people in the channelRoom.`
+  );
+});
+
 const server = net.createServer((client: net.Socket) => {
   const id = `${client.remoteAddress}:${client.remotePort}`;
+  const currentPeopleLength = Object.keys(clients).length + 1;
 
-  console.log('id: ', id);
+  console.log(
+    `${id} join the channelRoom! There are ${currentPeopleLength} people in the channelRoom.`
+  );
 
   channel.emit('join', id, client);
 
@@ -55,6 +80,10 @@ const server = net.createServer((client: net.Socket) => {
   client.on('data', (data: Buffer) => {
     const formatedData = data.toString();
     channel.emit('broadcast', id, formatedData);
+  });
+
+  client.on('close', () => {
+    channel.emit('leave', id);
   });
 });
 
