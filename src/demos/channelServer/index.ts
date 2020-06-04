@@ -4,7 +4,7 @@
  * @TodoList: 无
  * @Date: 2020-06-04 16:24:57
  * @Last Modified by: xiaotian@tangping
- * @Last Modified time: 2020-06-04 17:48:45
+ * @Last Modified time: 2020-06-04 17:53:00
  */
 
 import events = require('events');
@@ -53,7 +53,7 @@ channel.on('leave', (id: string) => {
   delete clients[id];
   delete subscriptions[id];
 
-  const currentPeopleLength = Object.keys(clients).length;
+  const currentPeopleLength = channel.listeners('broadcast').length;
 
   // 广播退出信息
   channel.emit(
@@ -68,7 +68,7 @@ channel.on('leave', (id: string) => {
 
 const server = net.createServer((client: net.Socket) => {
   const id = `${client.remoteAddress}:${client.remotePort}`;
-  const currentPeopleLength = Object.keys(clients).length + 1;
+  const currentPeopleLength = channel.listeners('broadcast').length + 1;
 
   console.log(
     `${id} join the channelRoom! There are ${currentPeopleLength} people in the channelRoom.`
