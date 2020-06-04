@@ -4,6 +4,8 @@
   "description": "node study demo",
   "main": "index.js",
   "scripts": {
+    "start": "npm run build:live",
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -12,7 +14,11 @@
   "author": "zhouyou",
   "license": "ISC",
   "devDependencies": {
-    "cz-conventional-changelog": "^3.2.0"
+    "@types/node": "^14.0.10",
+    "cz-conventional-changelog": "^3.2.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
   },
   "config": {
     "commitizen": {
