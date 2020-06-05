@@ -42,5 +42,12 @@
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
+  },
+  "dependencies": {
+    "@types/htmlparser2": "^3.10.1",
+    "@types/request": "^2.48.5",
+    "htmlparser": "^1.7.7",
+    "htmlparser2": "^4.1.0",
+    "request": "^2.60.0"
   }
 }
