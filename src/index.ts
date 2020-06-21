@@ -13,6 +13,9 @@
 // const singeWatcher = require('./demos/watcher/index.ts');
 // singeWatcher.start();
 
-const next = require('./demos/rssSpider/index.ts');
+// const next = require('./demos/rssSpider/index.ts');
+// next();
 
-next();
+const loop = require('./demos/eventLoop/index.ts');
+
+loop();
