@@ -48,6 +48,6 @@
     "@types/request": "^2.48.5",
     "htmlparser": "^1.7.7",
     "htmlparser2": "^4.1.0",
-    "request": "^2.60.0"
+    "request": "^2.88.2"
   }
 }
